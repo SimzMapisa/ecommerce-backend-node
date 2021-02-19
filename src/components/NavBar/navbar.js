@@ -10,7 +10,7 @@ import {
 } from "./NavBarElements";
 import Logo from "../../images/logo.svg";
 
-const NavBar = () => {
+const NavBar = ({totalItems}) => {
   return (
     <NavContainer>
       <Navbar className="container">
@@ -30,7 +30,7 @@ const NavBar = () => {
           </NavLink>
           <CartBtn>
             <Cart />
-            <span className="badge badge-light">4</span>
+            <span className="badge badge-light">{totalItems}</span>
           </CartBtn>
         </CartContainer>
       </Navbar>

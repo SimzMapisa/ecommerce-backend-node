@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
 import Products from "./components/Products/Products";
@@ -7,44 +7,44 @@ import NavBar from "./components/NavBar/navbar";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
-// CHec Commerce
+// Initialize Chec Commerce
 import { commerce } from "./lib/commerce";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const App = () => {
+  const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState({});
 
-    this.state = {
-      products: [],
-    };
-  }
+  const fetchProducts = async () => {
+    const { data } = await commerce.products.list();
+    setProducts(data);
+  };
 
-  fetchProducts() {
-    commerce.products
-      .list()
-      .then((products) => {
-        this.setState({ products: products.data });
-      })
-      .catch((error) => {
-        console.log("There was an error fetching the products", error);
-      });
-  }
+  const fetchCart = async () => {
+    setCart(await commerce.cart.retrieve());
+  };
 
-  componentDidMount() {
-    this.fetchProducts();
-  }
+  const handleAddToCart = async (productId, quantity) => {
+    const item = await commerce.cart.add(productId, quantity);
 
-  render() {
-    console.log(this.state.products);
-    return (<>
+    setCart(item.cart);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCart();
+  }, []);
+
+  console.log(cart);
+  return (
+    <>
       <Router>
-      <NavBar/>
-      <Container>
-        <Products  products={this.state.products} />
-      </Container>
+        <NavBar totalItems={cart.total_items}/>
+        <Container className="mt-5">
+          <Products products={products} onAddToCart={handleAddToCart}/>
+        </Container>
       </Router>
-    </>);
-  }
-}
+    </>
+  );
+};
 
 export default App;

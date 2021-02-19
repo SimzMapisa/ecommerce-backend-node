@@ -13,9 +13,8 @@ import {
 import AddToCartBtn from "../buttons/addToCartBtn"
 import WishList from "../buttons/wishlist"
 
-const Product = ({ product }) => {
+const Product = ({ product, onAddToCart  }) => {
 
-    console.log(product);
   return (
     <ProductContainer className="card">
       <ImageContainer>
@@ -31,7 +30,7 @@ const Product = ({ product }) => {
           <h6>{product.price.formatted_with_symbol}</h6>
         </Price>
         <Buttons>
-          <AddToCartBtn />
+        <button className="btn btn-success" onClick={()=>onAddToCart(product.id, 1)}>Add to Cart</button>
           <WishList />
         </Buttons>
       </ProductFooter>
