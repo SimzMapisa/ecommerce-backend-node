@@ -1,16 +1,41 @@
-import React from 'react'
+import React from "react";
+import {
+  NavContainer,
+  Navbar,
+  Bars,
+  NavLink,
+  CartContainer,
+  Cart,
+  CartBtn,
+} from "./NavBarElements";
+import Logo from "../../images/logo.svg";
 
 const NavBar = () => {
-    return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container"></div>
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  return (
+    <NavContainer>
+      <Navbar className="container">
+        <NavLink to="/">
+          <div className="brand">
+            <img src={Logo} alt="logo" />
+            <h5>Pc Link</h5>
+          </div>
+        </NavLink>
+        <Bars />
+        <CartContainer>
+          <NavLink to="/login" className="account">
+            Login
+          </NavLink>
+          <NavLink to="/register" className="account">
+            Register
+          </NavLink>
+          <CartBtn>
+            <Cart />
+            <span className="badge badge-light">4</span>
+          </CartBtn>
+        </CartContainer>
+      </Navbar>
+    </NavContainer>
+  );
+};
 
-    </nav>
-    )
-}
-
-export default NavBar
+export default NavBar;
