@@ -9,8 +9,10 @@ import {
   CartBtn,
 } from "./NavBarElements";
 import Logo from "../../images/logo.svg";
+import {useLocation} from "react-router-dom"
 
 const NavBar = ({totalItems}) => {
+  const location = useLocation();
   return (
     <NavContainer>
       <Navbar className="container">
@@ -28,10 +30,14 @@ const NavBar = ({totalItems}) => {
           <NavLink to="/register" className="account">
             Register
           </NavLink>
-          <CartBtn>
-            <Cart />
-            <span className="badge badge-light">{totalItems}</span>
-          </CartBtn>
+          {location.pathname === '/' && (
+            <NavLink to="/cart">
+            <CartBtn>
+              <Cart />
+              <span className="badge badge-light">{totalItems}</span>
+            </CartBtn>
+            </NavLink>
+          )}
         </CartContainer>
       </Navbar>
     </NavContainer>

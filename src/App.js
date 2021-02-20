@@ -4,8 +4,9 @@ import { Container } from "react-bootstrap";
 import Products from "./components/Products/Products";
 import "./App.css";
 import NavBar from "./components/NavBar/navbar";
+import Cart from "./components/Cart/Cart";
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Initialize Chec Commerce
 import { commerce } from "./lib/commerce";
@@ -29,21 +30,49 @@ const App = () => {
     setCart(item.cart);
   };
 
+  const handleUpdateCartQty = async (productId, quantity) => {
+    const { cart } = await commerce.cart.update(productId, { quantity });
+
+    setCart(cart);
+  };
+
+  const handleRemoveFromCart = async (productId) => {
+    const { cart } = await commerce.cart.remove(productId);
+    setCart(cart);
+  };
+
+  const handleEmptyCart = async () => {
+    const { cart } = await commerce.cart.empty();
+
+    setCart(cart);
+  };
+
   useEffect(() => {
     fetchProducts();
     fetchCart();
   }, []);
 
-  console.log(cart);
   return (
-    <>
-      <Router>
-        <NavBar totalItems={cart.total_items}/>
+    <Router>
+      <>
+        <NavBar totalItems={cart.total_items} />
         <Container className="mt-5">
-          <Products products={products} onAddToCart={handleAddToCart}/>
+          <Switch>
+            <Route exact path="/">
+              <Products products={products} onAddToCart={handleAddToCart} />
+            </Route>
+            <Route path="/cart">
+              <Cart
+                cart={cart}
+                handleUpdateCartQty={handleUpdateCartQty}
+                handleRemoveFromCart={handleRemoveFromCart}
+                handleEmptyCart={handleEmptyCart}
+              />
+            </Route>
+          </Switch>
         </Container>
-      </Router>
-    </>
+      </>
+    </Router>
   );
 };
 

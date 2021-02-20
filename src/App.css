@@ -1,5 +1,6 @@
 * {
   font-family: Montserrat, Helvetica, sans-serif;
+  /* overflow-x: hidden !important; */
 }
 
 .brand{
@@ -18,3 +19,4 @@
   width: 35px;
   display: inline-block;
 }
+

@@ -30,7 +30,7 @@ const Product = ({ product, onAddToCart  }) => {
           <h6>{product.price.formatted_with_symbol}</h6>
         </Price>
         <Buttons>
-        <button className="btn btn-success" onClick={()=>onAddToCart(product.id, 1)}>Add to Cart</button>
+        <button className="btn btn-success btn-sm" onClick={()=>onAddToCart(product.id, 1)}>Add to Cart</button>
           <WishList />
         </Buttons>
       </ProductFooter>
